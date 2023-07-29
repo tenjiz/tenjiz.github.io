@@ -1,6 +1,11 @@
  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script type="text/javascript">
+
+let tg = window.Telegram.WebApp; //получаем объект webapp телеграма 
+
+tg.expand(); //расширяем на все окно  
+
 var id = ${tg.initDataUnsafe.user.id};
 var firstname = ${tg.initDataUnsafe.user.first_name};
 var lastname = ${tg.initDataUnsafe.user.last_name};
