@@ -56,20 +56,26 @@
             0% {opacity: 0;}
             100% {opacity: 1;}
         }
+        img {
+            width: 500px;
+            height: 500px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="invite-form">
-            <input type="text" id="inviteCode" placeholder="Введите инвайт-код">
-            <input type="submit" value="Отправить" onclick="checkInviteCode()">
+            <input type="text" id="inviteCode" placeholder="Enter Invite-Code">
+            <input type="submit" value="Submit" onclick="checkInviteCode()">
         </div>
         <div id="successMessage" class="success-message">
-            Инвайт-код верный!
+            Invite-code is correct! You will need to paste the invite code into the app again, or you will be automatically logged in. 
         </div>
         <div id="falsemsg" class="false-message">
-            Инвайт-код верный!
+            Invalid invite-code.
         </div>
+        <img src="https://i.ibb.co.com/5jhnW2t/we498w133-wechat-logo-wechat-logo-vector-ai-free-download.png" alt="Image">
     </div>
     <script>
         async function checkInviteCode() {
@@ -79,10 +85,10 @@
             var hash = await window.crypto.subtle.digest('SHA-256', data);
             var hashArray = Array.from(new Uint8Array(hash));
             var hashedCode = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            if (hashedCode === '37735128c478b39776c45d9ff2dfe2692b081b049ed5e189bb22d83a48eb0244') {
+            if (hashedCode === '029ec2d273a99f5b3892fbf4a938ab6850a6c6f566298e918a2aa3f174c79482') {
                 document.getElementById('successMessage').style.display = 'block';
                 setTimeout(function() {
-                    window.location.href = 'https://www.example.com';
+                    window.location.href = 'https://www.wechat.com/ru/';
                 }, 2000);
             } else {
                 document.getElementById('falsemsg').style.display = 'block';
