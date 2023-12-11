@@ -32,6 +32,30 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .success-message {
+            display: none;
+            padding: 20px;
+            background-color: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+            border-radius: 5px;
+            margin-top: 20px;
+            animation: fadeIn 2s;
+        }
+        .false-message {
+            display: none;
+            padding: 20px;
+            background-color: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+            border-radius: 5px;
+            margin-top: 20px;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+        }
     </style>
 </head>
 <body>
@@ -39,6 +63,12 @@
         <div class="invite-form">
             <input type="text" id="inviteCode" placeholder="Введите инвайт-код">
             <input type="submit" value="Отправить" onclick="checkInviteCode()">
+        </div>
+        <div id="successMessage" class="success-message">
+            Инвайт-код верный!
+        </div>
+        <div id="falsemsg" class="false-message">
+            Инвайт-код верный!
         </div>
     </div>
     <script>
@@ -50,9 +80,12 @@
             var hashArray = Array.from(new Uint8Array(hash));
             var hashedCode = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
             if (hashedCode === '37735128c478b39776c45d9ff2dfe2692b081b049ed5e189bb22d83a48eb0244') {
-                window.location.href = 'https://www.example.com';
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(function() {
+                    window.location.href = 'https://www.example.com';
+                }, 2000);
             } else {
-                alert('Неверный инвайт-код!');
+                document.getElementById('falsemsg').style.display = 'block';
             }
         }
     </script>
