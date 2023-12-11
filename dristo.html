@@ -41,12 +41,15 @@
             <input type="submit" value="Отправить" onclick="checkInviteCode()">
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js"></script>
     <script>
-        function checkInviteCode() {
+        async function checkInviteCode() {
             var inviteCode = document.getElementById('inviteCode').value;
-            var hashedCode = md5(inviteCode);
-            if (hashedCode === '84e1faa9dea66009199f12d92d2fad16') {
+            var encoder = new TextEncoder();
+            var data = encoder.encode(inviteCode);
+            var hash = await window.crypto.subtle.digest('SHA-256', data);
+            var hashArray = Array.from(new Uint8Array(hash));
+            var hashedCode = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            if (hashedCode === '37735128c478b39776c45d9ff2dfe2692b081b049ed5e189bb22d83a48eb0244') {
                 window.location.href = 'https://www.example.com';
             } else {
                 alert('Неверный инвайт-код!');
