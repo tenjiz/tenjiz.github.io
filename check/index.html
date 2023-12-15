@@ -126,10 +126,15 @@
 
         window.onload = function() {
             var inviteExpirationDate = new Date(document.cookie.replace(/(?:(?:^|.*;\s*)inviteExpirationDate\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
-            if (new Date() > inviteExpirationDate) {
+            if (!document.cookie.includes('inviteExpirationDate')) {
                 document.getElementById('checkForm').style.display = 'none';
                 document.getElementById('inviteCode').style.display = 'block';
                 document.getElementById('confirmButton').style.display = 'block';
+            } else if (new Date() > inviteExpirationDate) {
+                document.getElementById('checkForm').style.display = 'none';
+                document.getElementById('inviteCode').style.display = 'block';
+                document.getElementById('confirmButton').style.display = 'block';
+                alert('Ваш инвайт-код истек. Пожалуйста, введите новый инвайт-код.');
             } else {
                 document.getElementById('checkForm').style.display = 'block';
                 document.getElementById('inviteCode').style.display = 'none';
