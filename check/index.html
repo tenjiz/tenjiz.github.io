@@ -155,20 +155,28 @@
         }
 
         function checkReceipt() {
-            var sum = document.getElementById('sum').value;
-            var date = document.getElementById('date').value;
-            var time = document.getElementById('time').value;
-            var fd = document.getElementById('fd').value;
-            var brand = document.querySelector('input[name="brand"]:checked').value;
+    var sum = document.getElementById('sum').value;
+    var date = document.getElementById('date').value;
+    var time = document.getElementById('time').value;
+    var fd = document.getElementById('fd').value;
+    var brand = document.querySelector('input[name="brand"]:checked').value;
 
-            if (database['sum'] === sum && database['product'] === date && database['time'] === time && database['fd'] === fd && database['brand'] === brand) {
-                document.getElementById('result').innerHTML = 'Чек уже есть в базе';
-            } else {
-                document.getElementById('result').innerHTML = 'Чека нет в базе';
-            }
-
-            document.getElementById('result').style.display = 'block';
+    var receiptExists = false;
+    for (var i = 0; i < database.length; i++) {
+        if (database[i]['sum'] === sum && database[i]['product'] === date && database[i]['time'] === time && database[i]['fd'] === fd && database[i]['brand'] === brand) {
+            receiptExists = true;
+            break;
         }
+    }
+
+    if (receiptExists) {
+        document.getElementById('result').innerHTML = 'Чек уже есть в базе';
+    } else {
+        document.getElementById('result').innerHTML = 'Чека нет в базе';
+    }
+
+    document.getElementById('result').style.display = 'block';
+}
     </script>
 </body>
 </html>
