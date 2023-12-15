@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Проверка чека</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('pjoyo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            width: 90%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            transition: transform .2s;
+        }
+
+        #container:hover {
+            transform: scale(1.02);
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            transition: box-shadow .3s;
+        }
+
+        input[type=text]:focus {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color .3s, transform .3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        #result {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            border-left: 6px solid #7c7c7c;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input type="text" id="inviteCode" placeholder="Введите инвайт-код">
+        <button id="confirmButton" onclick="checkInviteCode()">Подтвердить</button>
+
+        <div id="checkForm" style="display: none;">
+            <input type="text" id="sum" placeholder="Введите сумму">
+            <input type="text" id="date" placeholder="Введите дату">
+            <input type="text" id="time" placeholder="Введите время">
+            <input type="text" id="fd" placeholder="Введите ФД чека">
+            <p>Выберите бренд:</p>
+            <input type="radio" id="prology" name="brand" value="prology">
+            <label for="prology">Prology</label><br>
+            <input type="radio" id="alphapet" name="brand" value="alphapet">
+            <label for="alphapet">Alphapet</label><br>
+            <input type="radio" id="polaris" name="brand" value="polaris">
+            <label for="polaris">Polaris</label><br>
+            <button onclick="checkReceipt()">Проверить</button>
+        </div>
+
+        <div id="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        var database;
+
+        fetch('base.json')
+            .then(response => response.json())
+            .then(data => database = data);
+
+        window.onload = function() {
+            var inviteExpirationDate = new Date(document.cookie.replace(/(?:(?:^|.*;\s*)inviteExpirationDate\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+            if (new Date() > inviteExpirationDate) {
+                document.getElementById('checkForm').style.display = 'none';
+                alert('Ваш инвайт-код истек');
+            }
+        }
+
+        async function checkInviteCode() {
+            var inviteCode = document.getElementById('inviteCode').value;
+            var hash = await sha256(inviteCode);
+            if (hash === 'eef009fa2370c29b8a6bd200ba3d3eb0289b3e09d851ae28485a190c32b97cfd') {
+                var expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 7);
+                document.cookie = "inviteExpirationDate=" + expirationDate.toUTCString() + "; path=/";
+                document.getElementById('inviteCode').style.display = 'none';
+                document.getElementById('confirmButton').style.display = 'none';
+                document.getElementById('checkForm').style.display = 'block';
+            } else {
+                alert('Неверный инвайт-код');
+            }
+        }
+
+        async function sha256(message) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            const hash = await window.crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function checkReceipt() {
+            var sum = document.getElementById('sum').value;
+            var date = document.getElementById('date').value;
+            var time = document.getElementById('time').value;
+            var fd = document.getElementById('fd').value;
+            var brand = document.querySelector('input[name="brand"]:checked').value;
+
+            if (database['sum'] === sum && database['product'] === date && database['time'] === time && database['fd'] === fd && database['brand'] === brand) {
+                document.getElementById('result').innerHTML = 'Чек уже есть в базе';
+            } else {
+                document.getElementById('result').innerHTML = 'Чека нет в базе';
+            }
+
+            document.getElementById('result').style.display = 'block';
+            // Здесь можно добавить плавную анимацию для div с id=result
+        }
+    </script>
+</body>
+</html>
