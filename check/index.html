@@ -130,7 +130,10 @@
                 document.getElementById('checkForm').style.display = 'none';
                 document.getElementById('inviteCode').style.display = 'block';
                 document.getElementById('confirmButton').style.display = 'block';
-                alert('Ваш инвайт-код истек. Пожалуйста, введите новый инвайт-код.');
+            } else {
+                document.getElementById('checkForm').style.display = 'block';
+                document.getElementById('inviteCode').style.display = 'none';
+                document.getElementById('confirmButton').style.display = 'none';
             }
         }
 
